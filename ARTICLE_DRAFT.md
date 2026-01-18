@@ -35,7 +35,9 @@ $$\delta(A^+) = \delta(A^-) = \frac{1}{2}$$
 $$B_r = P(\text{increase} | d_n \equiv r \pmod 6) - P(\text{decrease} | d_n \equiv r \pmod 6)$$
 
 We observe:
+
 - B_0 ≈ -0.118 (gaps ≡ 0 favor decreases)
+
 - B_2 ≈ +0.170 (gaps ≡ 2 favor increases)  
 - B_4 ≈ +0.003 (gaps ≡ 4 are balanced)
 
@@ -65,12 +67,12 @@ Under the Hardy-Littlewood conjecture, primes in short intervals follow a Poisso
 
 **Lemma 3.1.** If X, Y ~ iid Exp(1), then P(Y ≥ X) = 1/2.
 
-*Proof.* 
+*Proof.*
 $$P(Y \geq X) = \int_0^\infty \int_x^\infty e^{-x} e^{-y} \, dy \, dx = \int_0^\infty e^{-2x} \, dx = \frac{1}{2}$$
 
 **Lemma 3.2.** By PNT, ln(p_{n+1})/ln(p_n) → 1 as n → ∞.
 
-**Proof of Theorem 1.** By Gallagher's theorem and the associated random model, we assume $g_{n+1}$ and $g_n$ are asymptotically i.i.d. Exp(1). By Lemma 3.1, $P(g_{n+1} \geq g_n) = 1/2$. 
+**Proof of Theorem 1.** By Gallagher's theorem and the associated random model, we assume $g_{n+1}$ and $g_n$ are asymptotically i.i.d. Exp(1). By Lemma 3.1, $P(g_{n+1} \geq g_n) = 1/2$.
 
 For the unnormalized gaps, we have:
 $$ \frac{d_{n+1}}{d_n} = \frac{g_{n+1} \ln(p_{n+1})}{g_n \ln(p_n)} = \frac{g_{n+1}}{g_n} (1 + o(1)) $$
@@ -84,10 +86,11 @@ Since the distribution of $g_{n+1}/g_n$ is continuous and the event $g_{n+1}/g_n
 
 For primes p > 3, we have p ≡ 1 or 5 (mod 6). Thus gaps satisfy d_n ≡ 0, 2, or 4 (mod 6).
 
-**Table 1: Distribution of gaps mod 6 (N = 500,000)**
+### Table 1: Distribution of gaps mod 6 (N = 500,000)
+
 
 | Class | Frequency | P(increase) | P(decrease) | Bias |
-|-------|-----------|-------------|-------------|------|
+| --- | --- | --- | --- | --- |
 | d_n ≡ 0 | 42.96% | 44.11% | 55.89% | -11.78% |
 | d_n ≡ 2 | 28.52% | 58.51% | 41.49% | +17.01% |
 | d_n ≡ 4 | 28.52% | 49.85% | 50.15% | -0.29% |
@@ -100,7 +103,7 @@ $$\delta(A^+) = \sum_{r \in \{0,2,4\}} w_r \cdot P(\text{increase} | d_n \equiv 
 Substituting observed values:
 $$\delta(A^+) = 0.4296 \times 0.4411 + 0.2852 \times 0.5851 + 0.2852 \times 0.4985 \approx 0.4837$$
 
-The strict symmetry $\delta(A^+) = \delta(A^-)$ emerges from the cancellation of biases. Note that the calculated value 0.4837 differs slightly from the asymptotic 0.5. This discrepancy reflects **finite-size effects** (slow convergence of the logarithmic term and residual biases at finite N). 
+The strict symmetry $\delta(A^+) = \delta(A^-)$ emerges from the cancellation of biases. Note that the calculated value 0.4837 differs slightly from the asymptotic 0.5. This discrepancy reflects **finite-size effects** (slow convergence of the logarithmic term and residual biases at finite N).
 
 As $N \to \infty$, under the Hardy-Littlewood axioms, the cancellation is expected to be exact, yielding $\lim_{N \to \infty} \delta(A^+) = 1/2$.
 
@@ -110,7 +113,8 @@ As $N \to \infty$, under the Hardy-Littlewood axioms, the cancellation is expect
 
 All computations were performed using Python with exact integer arithmetic. Source code is available in the supplementary materials.
 
-**Table 2: Convergence of δ(A+)**
+### Table 2: Convergence of δ(A+)
+
 
 | N | δ(A+) observed | |δ - 0.5| | Predicted (theory) |
 |---|----------------|----------|-------------------|
@@ -127,7 +131,9 @@ Convergence rate: O(1/ln(N)), consistent with the theoretical prediction.
 We have established, conditionally on Hardy-Littlewood, that the density of indices where consecutive prime gaps increase equals 1/2. Our main novel contribution is the identification of a modular balancing mechanism: the biases in individual residue classes modulo 6 cancel to produce global symmetry.
 
 Future work includes:
+
 1. Formalizing the proof in Lean4 or Coq
+
 2. Extending the analysis to higher moduli
 3. Investigating unconditional approaches
 
@@ -143,7 +149,7 @@ Future work includes:
 
 ## Appendix A: Open Science & Reproducibility
 
-**Source Code:** All Python scripts and Lean4 proof files are available at [GitHub Repository URL].
+**Source Code:** All Python scripts and Lean4 proof files are available at [https://github.com/zay168/prime-gap-symmetry-1b](https://github.com/zay168/prime-gap-symmetry-1b).
 **Archival DOI:** The code and this article draft are archived at Zenodo (DOI: 10.5281/zenodo.18293541).
 **License:** The code is released under the MIT License; this text is CC-BY 4.0.
 
