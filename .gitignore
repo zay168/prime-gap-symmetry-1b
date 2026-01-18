@@ -1,0 +1,16 @@
+# Personal & Pedagogical Files
+GUIDE_ELEVE_SECONDE.md
+PLAN_VICTOIRE.md
+CONTACT_PLAN.md
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Lean
+*.olean
+
+# Images/Data
+*.png
+!riemann_spectrum_analysis.png
