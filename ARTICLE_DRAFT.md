@@ -150,7 +150,7 @@ Future work includes:
 ## Appendix A: Open Science & Reproducibility
 
 **Source Code:** All Python scripts and Lean4 proof files are available at [https://github.com/zay168/prime-gap-symmetry-1b](https://github.com/zay168/prime-gap-symmetry-1b).
-**Archival DOI:** The code and this article draft are archived at Zenodo (DOI: 10.5281/zenodo.18293541).
+**Archival DOI:** The code and this article draft are archived at Zenodo (DOI: 10.5281/zenodo.18294141).
 **License:** The code is released under the MIT License; this text is CC-BY 4.0.
 
 ## Appendix B: Lean4 Proof Skeleton

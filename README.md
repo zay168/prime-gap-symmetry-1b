@@ -2,7 +2,7 @@
 
 **A rigorous computational and theoretical investigation into the symmetry of consecutive prime gap comparisons.**
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18293541.svg)](https://doi.org/10.5281/zenodo.18293541)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18294141.svg)](https://doi.org/10.5281/zenodo.18294141)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Status: Verified 1B](https://img.shields.io/badge/Status-Verified_1_Billion_Primes-brightgreen.svg)]()
 
