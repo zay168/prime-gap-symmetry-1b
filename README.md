@@ -12,7 +12,7 @@
 
 We have established, conditionally on the Hardy-Littlewood k-tuple conjecture, a "millennium-level" result regarding the distribution of prime gaps:
 
-$$ \delta(A^+) = \lim_{N \to \infty} \frac{1}{N} \# \{ n \leq N : d_{n+1} > d_n \} = \frac{1}{2} $$
+$$ \delta(A^+) = \lim_{N \to \infty} \frac{1}{N} \text{count} \{ n \leq N : d_{n+1} > d_n \} = \frac{1}{2} $$
 
 Using **GPU-accelerated verification on 1 BILLION primes**, we confirmed this symmetry with a precision of **0.0024%**.
 
