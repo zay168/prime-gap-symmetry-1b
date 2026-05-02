@@ -1,0 +1,31 @@
+name: Python smoke tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Run standard-library smoke tests
+        run: |
+          python scripts/smoke_test.py
+          python scripts/prime_gap_symmetry.py --limit 10000 --no-residues
+          python scripts/hardy_littlewood_tuple_check.py --offsets 0,2 --limit 10000 --prime-cutoff 1000 --integral-steps 1000
+          python scripts/mod6_gap_analysis.py --count 10000
+          python scripts/gap_diagnostics.py --count 10000 --window 1000 --min-occurrences 20
+          python scripts/streaming_large_runner.py --count 10000 --segment-size 10000 --quiet
+
+      - name: Run optional NumPy script on a small sample
+        run: python scripts/large_numpy_verification.py --count 10000

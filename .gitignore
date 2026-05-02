@@ -3,10 +3,23 @@
 __pycache__/
 *.py[cod]
 *$py.class
+.pytest_cache/
+.mypy_cache/
 
 # Lean
 *.olean
+.lake/
+lake-packages/
 
 # Images/Data
 *.png
-!riemann_spectrum_analysis.png
+*.csv
+*.json
+*.jsonl
+*.npy
+*.npz
+*.log
+
+# Local environments
+.venv/
+venv/

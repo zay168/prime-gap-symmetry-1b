@@ -1,87 +1,143 @@
-# Prime Gap Symmetry — Computational Verification to 10⁹
+# Prime Gap Symmetry
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18294141.svg)](https://doi.org/10.5281/zenodo.18294141)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Archived DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18294141.svg)](https://doi.org/10.5281/zenodo.18294141)
 
-A computational and theoretical investigation of the symmetry of consecutive prime-gap comparisons. Includes the GPU-accelerated verification pipeline, the draft article, and a partial Lean 4 formalization.
+Computational experiments around a simple question about consecutive prime gaps:
 
-## Main result
+> how often is the next prime gap larger than the current one?
 
-Conditional on the Hardy–Littlewood k-tuple conjecture,
+If `p_n` is the `n`-th prime and `d_n = p_{n+1} - p_n`, this repository studies the empirical frequencies of
 
-$$\delta(A^+) \;=\; \lim_{N \to \infty} \frac{1}{N} \,\#\{\, n \le N : d_{n+1} > d_n \,\} \;=\; \tfrac{1}{2},$$
+- `d_{n+1} > d_n`
+- `d_{n+1} < d_n`
+- `d_{n+1} = d_n`
 
-where $d_n = p_{n+1} - p_n$ is the $n$-th prime gap. GPU-accelerated verification over the first $10^9$ primes agrees with this prediction to within $0.0024\%$.
+The repository is intentionally conservative: it contains experiments, a heuristic note, and reproducibility scripts. It does **not** claim a proof of the prime-gap symmetry statement.
 
-## Key observations
+## Status
 
-1. **Conditional argument.** Partially formalized in Lean 4 (`formal_proof.lean`), relying on Gallagher's theorem derived from the Hardy–Littlewood conjecture.
-2. **Modular balancing.** The global 50/50 symmetry emerges from the cancellation of biases across residue classes modulo 6 ($d_n \equiv 0, 2, 4 \pmod 6$).
-3. **Riemann spectrum filter.** Spectral analysis of the convergence error shows that the gap-increment signal suppresses oscillations at the imaginary parts of the non-trivial Riemann zeros, consistent with a low-pass statistical filter.
+This is an exploratory computational project.
 
-## Verification results ($N = 10^9$)
+What is solid:
 
-| Metric | Value |
-| --- | --- |
-| Primes analyzed | $1{,}000{,}000{,}000$ |
-| Largest prime | $22{,}801{,}763{,}489$ |
-| $\delta(A^+)$ (increases) | $48.84886\%$ |
-| $\delta(A^-)$ (decreases) | $48.85126\%$ |
-| Difference | $0.0024\%$ |
+- exact integer experiments for small and medium ranges;
+- a clean Python script for reproducing the basic counts;
+- a streaming segmented runner for larger computations without storing all primes;
+- a documented reported large run over the first `10^9` primes;
+- an informal heuristic based on the Cramer-Gallagher model.
 
-Convergence is consistent with $O(1/\ln N)$, matching the theoretical prediction.
+What is not claimed:
+
+- no unconditional theorem;
+- no proof of Hardy-Littlewood;
+- no completed Lean formalization;
+- no evidence that a Fourier/Riemann-zero pattern has been established.
+
+## Quick start
+
+```bash
+python scripts/prime_gap_symmetry.py --limit 1000000
+```
+
+The script prints the number of primes below the limit, the strict comparison counts, and a small residue-class breakdown modulo 6.
+
+For a count-based run:
+
+```bash
+python scripts/prime_gap_symmetry.py --count 100000
+```
+
+For larger runs without storing the full prime list:
+
+```bash
+python scripts/streaming_large_runner.py --count 1000000 --segment-size 5000000
+```
+
+For a long run with reproducibility logs:
+
+```bash
+python scripts/streaming_large_runner.py --count 1000000000 --segment-size 100000000 --checkpoint-every-primes 10000000 --checkpoint-file results/prime_gap_1b.jsonl --json-summary results/prime_gap_1b_summary.json
+```
 
 ## Repository structure
 
-**Documentation**
+```text
+scripts/
+  prime_gap_symmetry.py        Reproducible CPU experiment.
+  large_numpy_verification.py  Optional larger NumPy experiment.
+  streaming_large_runner.py    Streaming segmented runner for large runs.
+  hardy_littlewood_tuple_check.py
+                               Finite k-tuple sanity check.
+  mod6_gap_analysis.py         Residue diagnostics for prime gaps.
+  gap_diagnostics.py           Correlation, window, and conditional diagnostics.
 
-- `ARTICLE_DRAFT.md` — draft paper.
-- `formal_proof.lean` — partial Lean 4 formalization.
+docs/
+  research_note.md             Heuristic model and mathematical context.
+  results.md                   Reported numerical results and caveats.
+  script_audit.md              Why older numbered scripts were removed.
+  formalization_status.md      Why the previous Lean skeleton was removed.
+  archive.md                   What was removed during cleanup and why.
+```
 
-**Verification (Python)**
+## Main empirical observation
 
-- `24_ultra_optimized.py` — GPU-accelerated verification script (~3.9M primes/s on an RTX 5060).
-- `25_riemann_oscillations.py` — spectral analysis of the convergence error against the Riemann zeros.
-- `22_gpu_verification.py` — earlier GPU verification baseline.
-- `20_mod6_structure.py` — derivation of the modular-balancing mechanism.
+In large computations the strict increase and strict decrease frequencies are very close. Equality events remain visible at finite scale, so the raw strict frequencies need not be close to `50%` individually.
 
-**Exploratory scripts**
+The reported large run over the first `10^9` primes gave:
 
-- `10_exploration_experimentale.py` — entropy and correlation tests.
-- `16_preuve_rigoureuse.py` — combinatorial proof attempts.
-- `19_attaque_ia.py` — pattern-detection experiments.
+| Event | Frequency |
+| --- | ---: |
+| `d_{n+1} > d_n` | `48.84886%` |
+| `d_{n+1} < d_n` | `48.85126%` |
+| `d_{n+1} = d_n` | `2.29988%` |
+| raw strict-frequency imbalance `|P(>) - P(<)|` | `0.00240%` |
 
-## Usage
+See [docs/results.md](docs/results.md).
 
-### Requirements
+## Heuristic
 
-- Python 3.10+
-- PyTorch with CUDA support
-- NVIDIA GPU (tested on RTX 5060)
+Under a strong random model for normalized prime gaps, two consecutive normalized gaps behave like exchangeable continuous random variables. Exchangeability gives
 
-### Run the primary verification
+```text
+P(Y > X) = P(Y < X).
+```
+
+This is a useful heuristic explanation for the near equality of strict increase and strict decrease frequencies. Turning this into a theorem about consecutive prime gaps is a much harder number-theoretic problem and is not done here.
+
+See [docs/research_note.md](docs/research_note.md).
+
+## Requirements
+
+The main script uses only the Python standard library.
+
+The optional NumPy scripts require:
 
 ```bash
-python 24_ultra_optimized.py
+pip install -r requirements.txt
+```
+
+Additional finite checks:
+
+```bash
+python scripts/hardy_littlewood_tuple_check.py --offsets 0,2 --limit 100000
+python scripts/mod6_gap_analysis.py --count 100000
+python scripts/gap_diagnostics.py --count 100000
 ```
 
 ## Citation
 
 ```bibtex
 @software{alsarraf_prime_gap_symmetry_2026,
-  author  = {Al Sarraf, Zayd},
-  title   = {Prime Gap Symmetry — Computational Verification to 10^9},
-  year    = {2026},
-  doi     = {10.5281/zenodo.18294141},
-  url     = {https://github.com/zay168/prime-gap-symmetry-1b}
+  author = {Al Sarraf, Zayd},
+  title = {Prime Gap Symmetry: Computational Experiments},
+  year = {2026},
+  doi = {10.5281/zenodo.18294141},
+  url = {https://github.com/zay168/prime-gap-symmetry-1b}
 }
 ```
 
+The DOI is the existing Zenodo archive for this project line. The current repository has been cleaned since that archived artifact, so the DOI should be read as provenance, not as a claim that the archived proof language is accepted.
+
 ## License
 
-- Code: [MIT](LICENSE)
-- Text and article: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
-
-## Author
-
-Zayd Al Sarraf · [github.com/zay168](https://github.com/zay168) · [alsarrafzayd@gmail.com](mailto:alsarrafzayd@gmail.com)
+Code and documentation are released under the MIT License.
