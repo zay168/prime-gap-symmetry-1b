@@ -2,17 +2,15 @@
 
 ## Question
 
-Let `p(n)` be the nth prime. Define the nth prime gap as:
+Let $p_n$ be the $n$-th prime and define the prime gap
 
-```text
-gap(n) = p(n + 1) - p(n)
-```
+$$
+d_n = p_{n+1} - p_n.
+$$
 
 The computational question studied here is:
 
-```text
-How often is gap(n + 1) > gap(n) compared with gap(n + 1) < gap(n)?
-```
+How often is $d_{n+1} > d_n$ compared with $d_{n+1} < d_n$?
 
 Equality events are treated separately.
 
@@ -20,19 +18,19 @@ Equality events are treated separately.
 
 A common heuristic in prime-gap questions is that normalized gaps
 
-```text
-normalized_gap(n) = gap(n) / log(p(n))
-```
+$$
+g_n = \frac{d_n}{\log p_n}
+$$
 
 behave, at large scale, like samples from an exponential distribution. In the strongest simplified version of the model, two neighboring normalized gaps are treated as exchangeable continuous random variables `X` and `Y`.
 
 Exchangeability alone gives
 
-```text
-P(Y > X) = P(Y < X).
-```
+$$
+\Pr(Y > X) = \Pr(Y < X).
+$$
 
-Continuity gives `P(Y = X) = 0` in the model, so each strict probability is `1/2`.
+Continuity gives $\Pr(Y = X) = 0$ in the model, so each strict probability is $1/2$.
 
 This explains why one might expect the strict increase and strict decrease counts to be close in large computations.
 

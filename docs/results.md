@@ -20,10 +20,10 @@ A previous large run was reported over the first `10^9` primes.
 | primes analyzed | `1,000,000,000` |
 | largest prime | `22,801,763,489` |
 | comparisons | `999,999,998` |
-| next gap larger | `48.84886%` |
-| next gap smaller | `48.85126%` |
-| next gap equal | `2.29988%` |
-| raw larger/smaller imbalance | `0.00240%` |
+| $d_{n+1} > d_n$ | `48.84886%` |
+| $d_{n+1} < d_n$ | `48.85126%` |
+| $d_{n+1} = d_n$ | `2.29988%` |
+| $\lvert \Pr(d_{n+1} > d_n) - \Pr(d_{n+1} < d_n) \rvert$ | `0.00240%` |
 
 This repository does not include the full raw prime list or a machine-verifiable log for that run. Treat the table as a reported result, not as a CI-verified artifact.
 
