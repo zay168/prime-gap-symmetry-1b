@@ -1,7 +1,5 @@
 # Prime Gap Symmetry
 
-[![Archived DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18294141.svg)](https://doi.org/10.5281/zenodo.18294141)
-
 Computational experiments around a simple question about consecutive prime gaps:
 
 > how often is the next prime gap larger than the current one?
@@ -131,12 +129,9 @@ python scripts/gap_diagnostics.py --count 100000
   author = {Al Sarraf, Zayd},
   title = {Prime Gap Symmetry: Computational Experiments},
   year = {2026},
-  doi = {10.5281/zenodo.18294141},
   url = {https://github.com/zay168/prime-gap-symmetry-1b}
 }
 ```
-
-The DOI is the existing Zenodo archive for this project line. The current repository has been cleaned since that archived artifact, so the DOI should be read as provenance, not as a claim that the archived proof language is accepted.
 
 ## License
 
