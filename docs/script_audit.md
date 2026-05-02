@@ -75,7 +75,7 @@ Problems:
 
 - `markov_transition_matrix` clips gaps above `max_gap`, but then weights the probabilities using the original unclipped gap values. All large gaps therefore fall back to a default probability of `0.5`, which distorts the reported global transition estimate.
 - The Fourier test uses only a few low frequencies and no null model, so "no periodicity" or "dominant frequency" should not be treated as evidence.
-- The summary says the symmetry of `d_{n+1} - d_n` naturally implies the desired density. That only follows from an exchangeability assumption that the script does not establish.
+- The summary says that symmetry in the difference between consecutive gaps naturally implies the desired density. That only follows from an exchangeability assumption that the script does not establish.
 - The convergence check compares non-strict `>=` frequencies with `1/2`, which is misleading when equality events are still visible.
 
 Replacement: `scripts/gap_diagnostics.py`.
@@ -90,7 +90,7 @@ Useful parts:
 Problems:
 
 - A sign test can fail to reject asymmetry without proving symmetry.
-- The "martingale" framing is too strong. The observed conditional table shows small gaps tend to increase and large gaps tend to decrease; that is regression toward the local mean, not evidence that `E[d_{n+1} | d_n = g] = g`.
+- The "martingale" framing is too strong. The observed conditional table shows small gaps tend to increase and large gaps tend to decrease; that is regression toward the local mean, not evidence that the expected next gap equals the current gap.
 - The final narrative says the effects cancel globally, but this cancellation is empirical and range-dependent.
 
 Replacement: `scripts/gap_diagnostics.py`.
@@ -113,9 +113,7 @@ Problems:
 
 - The reversibility argument is asserted from intuition, not derived.
 - The claim that equality events have a positive limiting density is unsupported and contradicted by the reported finite trend.
-- It mixes a valid identity,
-  `P(>=) = P(>) + P(=)`,
-  with speculative assumptions about the limits.
+- It mixes a valid identity about larger-or-equal events being the sum of strictly-larger and equal events with speculative assumptions about the limits.
 - It hardcodes old numerical values and then reasons from them.
 
 Replacement: removed; the honest version is the exchangeability heuristic in `docs/research_note.md`.
@@ -126,7 +124,7 @@ Problems:
 
 - The exponential-drift model is useful as a toy model, but the script turns it into an asymptotic proof.
 - It assumes independence of consecutive normalized gaps.
-- The normalized comparison changes the treatment of raw equal gaps because `d_n / log(p_n)` and `d_{n+1} / log(p_{n+1})` are almost never exactly equal. This is a different statistic, not a repaired version of the original one.
+- The normalized comparison changes the treatment of raw equal gaps because `gap(n) / log(p(n))` and `gap(n + 1) / log(p(n + 1))` are almost never exactly equal. This is a different statistic, not a repaired version of the original one.
 - It invokes a law of large numbers without proving the required dependence conditions.
 
 Replacement: `scripts/gap_diagnostics.py` reports normalized comparisons, but labels them only as diagnostics.

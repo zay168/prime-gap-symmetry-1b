@@ -4,11 +4,11 @@ Computational experiments around a simple question about consecutive prime gaps:
 
 > how often is the next prime gap larger than the current one?
 
-If `p_n` is the `n`-th prime and `d_n = p_{n+1} - p_n`, this repository studies the empirical frequencies of
+For each prime, define its gap as the distance to the next prime. This repository studies the empirical frequencies of three events:
 
-- `d_{n+1} > d_n`
-- `d_{n+1} < d_n`
-- `d_{n+1} = d_n`
+- the next gap is larger than the current gap;
+- the next gap is smaller than the current gap;
+- the next gap is equal to the current gap.
 
 The repository is intentionally conservative: it contains experiments, a heuristic note, and reproducibility scripts. It does **not** claim a proof of the prime-gap symmetry statement.
 
@@ -85,10 +85,10 @@ The reported large run over the first `10^9` primes gave:
 
 | Event | Frequency |
 | --- | ---: |
-| `d_{n+1} > d_n` | `48.84886%` |
-| `d_{n+1} < d_n` | `48.85126%` |
-| `d_{n+1} = d_n` | `2.29988%` |
-| raw strict-frequency imbalance `|P(>) - P(<)|` | `0.00240%` |
+| next gap larger | `48.84886%` |
+| next gap smaller | `48.85126%` |
+| next gap equal | `2.29988%` |
+| raw larger/smaller imbalance | `0.00240%` |
 
 See [docs/results.md](docs/results.md).
 

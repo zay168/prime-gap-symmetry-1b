@@ -2,16 +2,16 @@
 
 ## Question
 
-Let `p_n` be the `n`-th prime and define the prime gap
+Let `p(n)` be the nth prime. Define the nth prime gap as:
 
 ```text
-d_n = p_{n+1} - p_n.
+gap(n) = p(n + 1) - p(n)
 ```
 
 The computational question studied here is:
 
 ```text
-How often is d_{n+1} > d_n compared with d_{n+1} < d_n?
+How often is gap(n + 1) > gap(n) compared with gap(n + 1) < gap(n)?
 ```
 
 Equality events are treated separately.
@@ -21,7 +21,7 @@ Equality events are treated separately.
 A common heuristic in prime-gap questions is that normalized gaps
 
 ```text
-g_n = d_n / log(p_n)
+normalized_gap(n) = gap(n) / log(p(n))
 ```
 
 behave, at large scale, like samples from an exponential distribution. In the strongest simplified version of the model, two neighboring normalized gaps are treated as exchangeable continuous random variables `X` and `Y`.
